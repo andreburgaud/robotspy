@@ -65,7 +65,7 @@ user-agent 'Nutch' with URI '/brian/': ALLOWED
 
 Here is an example with the same data as above, using the `robots` package from the Python shell:
 
-```
+```python
 >>> import robots
 >>> parser = robots.RobotsParser.from_uri('http://www.pythontest.net/elsewhere/robots.txt')
 >>> useragent = 'Nutch'
