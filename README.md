@@ -1,13 +1,14 @@
 # Robots Module
 
 The `robots` module implements a parser for robots.txt file. The recommended class to use is 
-robots.RobotsParser, but a thin facade robots.RobotFileParser also exists to be used as a 
-substitute for [`urllib.robotparser`](https://docs.python.org/3/library/urllib.robotparser.html)
-available in the Python standard library. The API is the same and mostly allow for backward compatibility.
+`robots.RobotsParser`, but a thin facade `robots.RobotFileParser` also exists to be used as a 
+substitute for [`urllib.robotparser.RobotFileParser`](https://docs.python.org/3/library/urllib.robotparser.html)
+available in the Python standard library. This facade exposes a similar API to allow for some lefel
+of backward compatibility.
 
-The main reason for this rewrite are the following:
+The main reason for this partial rewrite are the following:
 
-1. This was initially intended to experiment with parsing `robots.txt` for a link checker project.
+1. This was initially intended to experiment with parsing `robots.txt` for a link checker project (unavailable at the moment).
 1. The implementation is attempting to follow the latest internet draft [Robots Exclusion Protocol](https://tools.ietf.org/html/draft-koster-rep-00).
 1. It does not try to be compliant with some directives not in the specs but commonly accepted like 
 the ones in [`urllib.robotparser`](https://docs.python.org/3/library/urllib.robotparser.html), like 
@@ -29,7 +30,7 @@ $ python3 -m pip install robotspy
 
 ## Usage
 
-The `robots` package can be imported as a module and is also executable invokable with `python -m`.
+The `robots` package can be imported as a module and also exposes an executable invokable with `python -m`.
 
 ### Execute the Package
 
@@ -97,11 +98,11 @@ Other dependencies are intended for deployment to the **Cheese Shop** (PyPI):
 * wheel
 * twine
 
-The `Makefile` invokes tools like:
+The `Makefile` also invokes the following tools:
 
 * [Black](https://github.com/psf/black) 
 * [Mypy](http://mypy-lang.org/)
-* [Pylit](https://www.pylint.org/)
+* [Pylint](https://www.pylint.org/)
 
 At this stage of the development, version 0.1.0, these development tools are expected to be installed globally.
 
