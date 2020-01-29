@@ -1,0 +1,8 @@
+.venv/
+.idea/
+dist/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+*.py[cod]
+robotspy.egg-info

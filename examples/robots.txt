@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /tmp/
+Disallow: /a%3Cd.html
+Disallow: /a/b.html
+Disallow: /%7ejoe/index.html

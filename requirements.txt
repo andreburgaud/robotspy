@@ -1,0 +1,31 @@
+attrs==19.3.0
+bleach==3.1.0
+certifi==2019.11.28
+cffi==1.13.2
+chardet==3.0.4
+cryptography==2.8
+docutils==0.15.2
+idna==2.8
+jeepney==0.4.2
+keyring==21.0.0
+more-itertools==8.0.2
+packaging==20.0
+pkginfo==1.5.0.1
+pluggy==0.13.1
+py==1.8.1
+pycparser==2.19
+Pygments==2.5.2
+pyparsing==2.4.6
+pytest==5.3.4
+readme-renderer==24.0
+requests==2.22.0
+requests-toolbelt==0.9.1
+# Editable install with no version control (robotspy==0.1.0)
+-e /home/andre/AB/git/robotspy
+SecretStorage==3.1.1
+six==1.13.0
+tqdm==4.41.1
+twine==3.1.1
+urllib3==1.25.7
+wcwidth==0.1.8
+webencodings==0.5.1
