@@ -10,7 +10,7 @@ clean:
 	rm -rf .cache build dist robotspy.egg-info
 
 deploy:
-	@echo 'TBD'
+	python -m twine upload dist/*
 
 dist: clean wheel check
 
