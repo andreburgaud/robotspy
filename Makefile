@@ -18,7 +18,7 @@ dist: clean wheel check
 fmt:
 	black robots
 
-github:
+tag:
 	git push
 	git tag -a ${VERSION} -m 'Version ${TAG}'
 	git push --tags
