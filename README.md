@@ -1,20 +1,22 @@
-# Robots Module
+# Robots Exclusion Standard Parser for Python
 
-The `robots` module implements a parser for robots.txt file. The recommended class to use is 
-`robots.RobotsParser`, but a thin facade `robots.RobotFileParser` also exists to be used as a 
-substitute for [`urllib.robotparser.RobotFileParser`](https://docs.python.org/3/library/urllib.robotparser.html)
-available in the Python standard library. This facade exposes a similar API to allow for some lefel
-of backward compatibility.
+The `robots` Python module implements a parser for robots.txt file. The recommended class to use is 
+`robots.RobotsParser`. Besides, a thin facade `robots.RobotFileParser` also exists to be used as
+a substitute for [`urllib.robotparser.RobotFileParser`](https://docs.python.org/3/library/urllib.robotparser.html),
+available in the Python standard library. The facade `robots.RobotFileParser` exposes an API that is
+mostly compatible with `urllib.robotparser.RobotFileParser`.
 
-The main reason for this partial rewrite are the following:
+The main reasons for this rewrite are the following:
 
-1. This was initially intended to experiment with parsing `robots.txt` for a link checker project (unavailable at the moment).
-1. The implementation is attempting to follow the latest internet draft [Robots Exclusion Protocol](https://tools.ietf.org/html/draft-koster-rep-00).
-1. It does not try to be compliant with some directives not in the specs but commonly accepted like 
-the ones in [`urllib.robotparser`](https://docs.python.org/3/library/urllib.robotparser.html), like 
-`request-rate`, `crawl-delay`, but it supports `sitemaps`. 
-1. It also includes the same tests as the [Google Robots.txt Parser](https://github.com/google/robotstxt),
-except for some specific behavior specific to Google. 
+1. It was initially intended to experiment with parsing `robots.txt` for a link checker project 
+(not implemented).
+1. It is attempting to follow the latest internet draft 
+[Robots Exclusion Protocol](https://tools.ietf.org/html/draft-koster-rep-00).
+1. It does not try to be compliant with commonly accepted directives that are not in the current
+[specs]((https://tools.ietf.org/html/draft-koster-rep-00)) such as `request-rate` and `crawl-delay`,
+but it currently supports `sitemaps`. 
+1. It satisfies the same tests as the [Google Robots.txt Parser](https://github.com/google/robotstxt),
+except for some custom behaviors specific to Google Robots. 
 
 ## Installation
 
@@ -30,7 +32,8 @@ $ python3 -m pip install robotspy
 
 ## Usage
 
-The `robots` package can be imported as a module and also exposes an executable invokable with `python -m`.
+The `robots` package can be imported as a module and also exposes an executable invokable with
+`python -m`.
 
 ### Execute the Package
 
@@ -40,7 +43,7 @@ After installing `robotspy`, you can validate the installation by running the fo
 $ python -m robots --help
 usage: robots (<robots_path>|<robots_url>) <user_agent> <URI>
 
-Shows whether the given user agent and URI combination is allowed or
+Shows whether the given user agent and URI combination are allowed or
 disallowed by the given robots.txt file.
 
 positional arguments:
