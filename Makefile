@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := help
+VERSION := $(shell echo `grep __version__ robots/__init__.py | cut -d '"' -f 2`)
 
 check:
 	python -m twine check dist/*
@@ -16,6 +17,11 @@ dist: clean wheel check
 
 fmt:
 	black robots
+
+github:
+	git push
+	git tag -a ${VERSION} -m 'Version ${TAG}'
+	git push --tags
 
 help:
 	@echo 'Makefile for RobotsPy (Python robots.txt parser)'
@@ -41,7 +47,10 @@ test:
 type:
 	mypy robots
 
+version:
+	@echo 'robots version: $(VERSION)'
+
 wheel:
 	python setup.py sdist bdist_wheel
 
-.PHONY: check clean deploy dist fmt help lint test type wheel
+.PHONY: check clean deploy dist fmt help lint test type version wheel
