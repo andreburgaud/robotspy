@@ -8,12 +8,13 @@ clean:
 	find . -name '*.pyc' -delete
 	find . -name '__pycache__' -type d | xargs rm -rf
 	find . -name '.pytest_cache' -type d | xargs rm -rf
+	rm *.bak
 	rm -rf .cache build dist robotspy.egg-info
 
 deploy:
 	python -m twine upload dist/*
 
-dist: clean wheel check
+dist: version test clean wheel check
 
 fmt:
 	black robots
@@ -36,6 +37,7 @@ help:
 	@echo '    make lint       Lint Python file using Pylint (Assuming Pylint installed globally)'
 	@echo '    make test       Execute tests'
 	@echo '    make type       Type checking using Mypy (assuming Mypy installed globally)'
+	@echo '    make version    Display current package version'
 	@echo '    make wheel      Build the wheel'
 
 lint:
@@ -48,7 +50,8 @@ type:
 	mypy robots
 
 version:
-	@echo 'robots version: $(VERSION)'
+	@echo 'robots version: ${VERSION}'
+	@perl -pi.bak -e 's/version="(\d+\.\d+\.\d+.*)"/version="${VERSION}"/' setup.py
 
 wheel:
 	python setup.py sdist bdist_wheel
