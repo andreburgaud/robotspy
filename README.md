@@ -1,6 +1,6 @@
 # Robots Exclusion Standard Parser for Python
 
-The `robots` Python module implements a parser for robots.txt file. The recommended class to use is 
+The `robots` Python module implements a parser for robots.txt file. The recommended class to use is
 `robots.RobotsParser`. Besides, a thin facade `robots.RobotFileParser` also exists to be used as
 a substitute for [`urllib.robotparser.RobotFileParser`](https://docs.python.org/3/library/urllib.robotparser.html),
 available in the Python standard library. The facade `robots.RobotFileParser` exposes an API that is
@@ -8,15 +8,15 @@ mostly compatible with `urllib.robotparser.RobotFileParser`.
 
 The main reasons for this rewrite are the following:
 
-1. It was initially intended to experiment with parsing `robots.txt` for a link checker project 
+1. It was initially intended to experiment with parsing `robots.txt` for a link checker project
 (not implemented).
-1. It is attempting to follow the latest internet draft 
+1. It is attempting to follow the latest internet draft
 [Robots Exclusion Protocol](https://tools.ietf.org/html/draft-koster-rep-00).
 1. It does not try to be compliant with commonly accepted directives that are not in the current
 [specs]((https://tools.ietf.org/html/draft-koster-rep-00)) such as `request-rate` and `crawl-delay`,
-but it currently supports `sitemaps`. 
+but it currently supports `sitemaps`.
 1. It satisfies the same tests as the [Google Robots.txt Parser](https://github.com/google/robotstxt),
-except for some custom behaviors specific to Google Robots. 
+except for some custom behaviors specific to Google Robots.
 
 ## Installation
 
@@ -27,7 +27,7 @@ in a newly created directory, as follows:
 
 ```
 $ mkdir project && cd project
-$ python3 -m pip install robotspy 
+$ python3 -m pip install robotspy
 ```
 
 ## Usage
@@ -103,7 +103,7 @@ Other dependencies are intended for deployment to the **Cheese Shop** (PyPI):
 
 The `Makefile` also invokes the following tools:
 
-* [Black](https://github.com/psf/black) 
+* [Black](https://github.com/psf/black)
 * [Mypy](http://mypy-lang.org/)
 * [Pylint](https://www.pylint.org/)
 
@@ -111,6 +111,8 @@ At this stage of the development, version 0.1.0, these development tools are exp
 
 ## Release History
 
+* 0.3.0: TBD
+* 0.2.0: Updated the documentation
 * 0.1.0: Initial release
 
 ## License
