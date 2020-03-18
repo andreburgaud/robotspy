@@ -111,7 +111,7 @@ At this stage of the development, version 0.1.0, these development tools are exp
 
 ## Release History
 
-* 0.3.0: TBD
+* 0.3.0: Updated `bleach` package to address CVE-2020-6802
 * 0.2.0: Updated the documentation
 * 0.1.0: Initial release
 
