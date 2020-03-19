@@ -5,7 +5,7 @@ cffi==1.14.0
 chardet==3.0.4
 cryptography==2.8
 docutils==0.16
-idna==2.8
+idna==2.9
 jeepney==0.4.3
 keyring==21.2.0
 more-itertools==8.2.0
