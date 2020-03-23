@@ -68,7 +68,7 @@ user-agent 'Nutch' with URI '/brian/': ALLOWED
 
 Here is an example with the same data as above, using the `robots` package from the Python shell:
 
-```python
+```
 >>> import robots
 >>> parser = robots.RobotsParser.from_uri('http://www.pythontest.net/elsewhere/robots.txt')
 >>> useragent = 'Nutch'
@@ -107,7 +107,27 @@ The `Makefile` also invokes the following tools:
 * [Mypy](http://mypy-lang.org/)
 * [Pylint](https://www.pylint.org/)
 
-At this stage of the development, version 0.1.0, these development tools are expected to be installed globally.
+At this stage of the development, version 0.3.0, these development tools are expected to be installed globally.
+
+### Dependency Tree
+
+To display the dependency tree:
+
+```
+$ pipdeptree
+```
+
+or
+
+```
+$ make tree
+```
+
+To display the reverse dependency tree of a particular package, `idna` in the example below:
+
+```
+$ pipdeptree --reverse --packages idna
+```
 
 ## Release History
 

@@ -19,10 +19,8 @@ dist: version test clean wheel check
 fmt:
 	black robots
 
-tag:
-	git push
-	git tag -a ${VERSION} -m 'Version ${TAG}'
-	git push --tags
+freeze:
+	pip freeze | grep -v robotspy > requirements.txt
 
 help:
 	@echo 'Makefile for RobotsPy (Python robots.txt parser)'
@@ -33,9 +31,11 @@ help:
 	@echo '    make deploy     Deploy package to the Cheese Shop (PyPI)'
 	@echo '    make dist       Clean, generate the distribution and check'
 	@echo '    make fmt        Format Python files using Black (Assuming Black installed globally)'
+	@echo '    make freeze     Update the requirements.txt excluding local package (robotspy)'
 	@echo '    make help       Display this help message'
 	@echo '    make lint       Lint Python file using Pylint (Assuming Pylint installed globally)'
 	@echo '    make test       Execute tests'
+	@echo '    make tree       Display the dependency tree (using pipdeptree)'
 	@echo '    make type       Type checking using Mypy (assuming Mypy installed globally)'
 	@echo '    make version    Display current package version'
 	@echo '    make wheel      Build the wheel'
@@ -43,8 +43,16 @@ help:
 lint:
 	pylint robots
 
+tag:
+	git push
+	git tag -a ${VERSION} -m 'Version ${TAG}'
+	git push --tags
+
 test:
 	pytest tests -vv
+
+tree:
+	pipdeptree
 
 type:
 	mypy robots
