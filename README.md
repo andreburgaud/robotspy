@@ -107,7 +107,7 @@ The `Makefile` also invokes the following tools:
 * [Mypy](http://mypy-lang.org/)
 * [Pylint](https://www.pylint.org/)
 
-At this stage of the development, version 0.3.0, these development tools are expected to be installed globally.
+At this stage of the development, version 0.3.1, these development tools are expected to be installed globally.
 
 ### Dependency Tree
 
