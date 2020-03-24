@@ -27,7 +27,11 @@ in a newly created directory, as follows:
 
 ```
 $ mkdir project && cd project
-$ python3 -m pip install robotspy
+$ python -m venv .venv --prompt robotspy
+$ . .venv/bin/activate
+(robotspy) $ python -m pip install --upgrade pip
+(robotspy) $ python -m pip install --upgrade setuptools
+(robotspy) $ python -m pip install robotspy
 ```
 
 ## Usage
@@ -40,7 +44,7 @@ The `robots` package can be imported as a module and also exposes an executable 
 After installing `robotspy`, you can validate the installation by running the following command:
 
 ```
-$ python -m robots --help
+(robotspy) $ python -m robots --help
 usage: robots (<robots_path>|<robots_url>) <user_agent> <URI>
 
 Shows whether the given user agent and URI combination are allowed or
@@ -56,12 +60,54 @@ optional arguments:
   -v, --version  show program's version number and exit
 ```
 
-A concrete example to check against http://www.pythontest.net/elsewhere/robots.txt if the user agent
-`Nutch` can fetch the path `/brian/` would be done as follows:
+### Examples
+
+The content of http://www.pythontest.net/elsewhere/robots.txt is the following:
 
 ```
-$ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
+# Used by NetworkTestCase in Lib/test/test_robotparser.py
+
+User-agent: Nutch
+Disallow: /
+Allow: /brian/
+
+User-agent: *
+Disallow: /webstats/
+```
+
+To check if the user agent `Nutch` can fetch the path `/brian/` you can execute:
+
+```
+(robotspy) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
 user-agent 'Nutch' with URI '/brian/': ALLOWED
+```
+
+Or, you can also pass the full URL, http://www.pythontest.net/brian/:
+
+```
+(robotspy) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
+user-agent 'Nutch' with URI 'http://www.pythontest.net/brian/': ALLOWED
+```
+
+Can user agent `Nutch` fetch the path `/brian`?
+
+```
+(robotspy) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian
+user-agent 'Nutch' with URI '/brian': DISALLOWED
+```
+
+Or, `/`?
+
+```
+(robotspy) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /
+user-agent 'Nutch' with URI '/': DISALLOWED
+```
+
+How about user agent `Johnny`?
+
+```
+(robotspy) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Johnny /
+user-agent 'Johnny' with URI '/': ALLOWED
 ```
 
 ### Use the Module in a Project
@@ -69,15 +115,39 @@ user-agent 'Nutch' with URI '/brian/': ALLOWED
 Here is an example with the same data as above, using the `robots` package from the Python shell:
 
 ```
+(robotspy) $ python 
 >>> import robots
 >>> parser = robots.RobotsParser.from_uri('http://www.pythontest.net/elsewhere/robots.txt')
 >>> useragent = 'Nutch'
 >>> path = '/brian/'
 >>> result = parser.can_fetch(useragent, path)
->>> print(f"Can {useragent} fetch {path}? {result}")
+>>> print(f'Can {useragent} fetch {path}? {result}')
 Can Nutch fetch /brian/? True
 >>>
 ```
+
+### Bug in the Python standard library
+
+There is a bug in [`urllib.robotparser`](https://docs.python.org/3/library/urllib.robotparser.html) 
+from the Python standard library that causes the following test to differ from the example above with `robotspy`.
+
+The example with `urllib.robotparser` is the following:
+
+```
+$ python
+>>> import urllib.robotparser
+>>> rp = urllib.robotparser.RobotFileParser()
+>>> rp.set_url('http://www.pythontest.net/elsewhere/robots.txt')
+>>> rp.read()
+>>> rp.can_fetch('Nutch', '/brian/')
+False
+```
+
+Notice that the result is `False` whereas `robotspy` return `True`.
+
+Bug [bpo-39187](https://bugs.python.org/issue39187) was open to raise awareness on this issue and PR 
+https://github.com/python/cpython/pull/17794 was submitted as a possible fix. `robotspy` does not 
+exhibit this problem.
 
 ## Development
 
@@ -96,10 +166,12 @@ $ . .venv/bin/activate
 $
 ```
 
-Other dependencies are intended for deployment to the **Cheese Shop** (PyPI):
+Other dependencies are intended for deployment to the [Cheese Shop](https://wiki.python.org/moin/CheeseShop) ([PyPI](https://pypi.org/)):
 
-* wheel
-* twine
+* [Wheel](https://pypi.org/project/wheel/0.22.0/)
+* [twine](https://pypi.org/project/twine/)
+
+See the build file, `Makefile`, for the commands and parameters.
 
 The `Makefile` also invokes the following tools:
 
@@ -107,7 +179,7 @@ The `Makefile` also invokes the following tools:
 * [Mypy](http://mypy-lang.org/)
 * [Pylint](https://www.pylint.org/)
 
-At this stage of the development, version 0.3.1, these development tools are expected to be installed globally.
+At this stage of the development, version 0.3.1, the three development tools above are expected to be installed globally.
 
 ### Dependency Tree
 
