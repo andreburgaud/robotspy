@@ -6,7 +6,7 @@ Robots Exclusion Protocol (REP) draft-koster-rep-01
 https://tools.ietf.org/html/draft-koster-rep
 """
 
-from typing import Dict, Iterator, List, NamedTuple, Tuple, TypeVar
+from typing import Dict, Iterator, List, NamedTuple, Tuple, Type, TypeVar
 
 import enum
 import fnmatch
@@ -92,8 +92,6 @@ class Errors(enum.Enum):
 
 Token = NamedTuple("Token", [("type", TokenType), ("value", str), ("linenum", int)])
 
-T = TypeVar("T", bound="RobotsParser")
-
 
 def gen_tokens(gen_func, source):
     """Token generator.
@@ -123,6 +121,9 @@ def gen_tokens(gen_func, source):
             yield Token(TokenType.SITEMAP, sitemap, linenum)
         else:
             yield Token(TokenType.UNEXPECTED, line, linenum)
+
+
+T = TypeVar("T", bound="RobotsParser")
 
 
 class RobotsParser:
@@ -189,17 +190,17 @@ class RobotsParser:
         """Property pointing to the time the robots.txt was parsed"""
         return self._time
 
+    @timestamp.setter
+    def timestamp(self, timestamp):
+        self._time = timestamp
+
     @property
     def sitemaps(self):
         """Property pointing to the private sitemaps list"""
         return self._sitemaps or None
 
-    @timestamp.setter
-    def timestamp(self, timestamp):
-        self._time = timestamp
-
     @classmethod
-    def from_string(cls, robotstxt: str) -> T:
+    def from_string(cls: Type[T], robotstxt: str) -> T:
         """Build a robots parser from a string representing the content of a robots.txt file."""
         parser = cls()
         gen_string = lambda txt: (line for line in txt.split("\n"))
@@ -225,7 +226,7 @@ class RobotsParser:
             self._errors.append(("", str(err)))
 
     @classmethod
-    def from_uri(cls, uri: str) -> T:
+    def from_uri(cls: Type[T], uri: str) -> T:
         """Build a robots parser given a url or uri pointing to a robots.txt."""
         parser = cls()
         parser.parse_tokens(gen_tokens(parser.gen_uri, uri))
@@ -242,7 +243,7 @@ class RobotsParser:
             self._errors.append((filename, Errors.ERROR_NO_FILE_FOUND))
 
     @classmethod
-    def from_file(cls, filename: str) -> T:
+    def from_file(cls: Type[T], filename: str) -> T:
         """Build a robots parser given a local path pointing to a robots.txt file."""
         parser = cls()
         parser.parse_tokens(gen_tokens(parser.gen_file, filename))
