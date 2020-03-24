@@ -5,11 +5,11 @@ check:
 	python -m twine check dist/*
 
 clean:
-	find . -name '*.pyc' -delete
-	find . -name '__pycache__' -type d | xargs rm -rf
-	find . -name '.pytest_cache' -type d | xargs rm -rf
-	rm *.bak
-	rm -rf .cache build dist robotspy.egg-info
+	find . -name '*.pyc' -delete || true
+	find . -name '__pycache__' -type d | xargs rm -rf || true
+	find . -name '.pytest_cache' -type d | xargs rm -rf || true
+	rm *.bak || true
+	rm -rf .cache build dist robotspy.egg-info || true
 
 deploy:
 	python -m twine upload dist/*
