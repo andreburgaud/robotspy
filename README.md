@@ -131,6 +131,11 @@ $ pipdeptree --reverse --packages idna
 
 ## Release History
 
+* 0.3.1: 
+  * Updated `idna` and `wcwidth` packages
+  * Added `pipdeptree` package to provide visibility on dependencies
+  * Fixed `mypy` errors
+  * Explicitly ignored `pylint` errors related to commonly used names like `f`, `m`, or `T`
 * 0.3.0: Updated `bleach` package to address CVE-2020-6802
 * 0.2.0: Updated the documentation
 * 0.1.0: Initial release
