@@ -203,6 +203,8 @@ $ pipdeptree --reverse --packages idna
 
 ## Release History
 
+* 0.3.2: 
+  * Upgraded `bleach`, `tqdm`, and `setuptools` packages
 * 0.3.1: 
   * Updated `idna` and `wcwidth` packages
   * Added `pipdeptree` package to provide visibility on dependencies
