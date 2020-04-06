@@ -115,7 +115,7 @@ user-agent 'Johnny' with URI '/': ALLOWED
 Here is an example with the same data as above, using the `robots` package from the Python shell:
 
 ```
-(robotspy) $ python 
+(robotspy) $ python
 >>> import robots
 >>> parser = robots.RobotsParser.from_uri('http://www.pythontest.net/elsewhere/robots.txt')
 >>> useragent = 'Nutch'
@@ -128,7 +128,7 @@ Can Nutch fetch /brian/? True
 
 ### Bug in the Python standard library
 
-There is a bug in [`urllib.robotparser`](https://docs.python.org/3/library/urllib.robotparser.html) 
+There is a bug in [`urllib.robotparser`](https://docs.python.org/3/library/urllib.robotparser.html)
 from the Python standard library that causes the following test to differ from the example above with `robotspy`.
 
 The example with `urllib.robotparser` is the following:
@@ -145,8 +145,8 @@ False
 
 Notice that the result is `False` whereas `robotspy` return `True`.
 
-Bug [bpo-39187](https://bugs.python.org/issue39187) was open to raise awareness on this issue and PR 
-https://github.com/python/cpython/pull/17794 was submitted as a possible fix. `robotspy` does not 
+Bug [bpo-39187](https://bugs.python.org/issue39187) was open to raise awareness on this issue and PR
+https://github.com/python/cpython/pull/17794 was submitted as a possible fix. `robotspy` does not
 exhibit this problem.
 
 ## Development
@@ -203,9 +203,11 @@ $ pipdeptree --reverse --packages idna
 
 ## Release History
 
-* 0.3.2: 
+* 0.3.3:
+  * Upgraded `tqdm`, and `cryptography` packages
+  * 0.3.2:
   * Upgraded `bleach`, `tqdm`, and `setuptools` packages
-* 0.3.1: 
+* 0.3.1:
   * Updated `idna` and `wcwidth` packages
   * Added `pipdeptree` package to provide visibility on dependencies
   * Fixed `mypy` errors
