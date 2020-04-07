@@ -51,7 +51,7 @@ def normalize_uri(path_uri: str) -> str:
     if not isinstance(path_uri, pathlib.Path) and is_url(path_uri):
         return path_uri
 
-    return pathlib.Path(path_uri).as_uri()
+    return pathlib.Path(path_uri).resolve().as_uri()
 
 
 def create_robots(robots_uri: str) -> robots.RobotsParser:
