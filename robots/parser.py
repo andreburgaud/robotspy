@@ -372,12 +372,12 @@ class RobotsParser:
 
         if pattern.endswith("$"):
             # When ending with '$', needs to be an exact match
-            return fnmatch.fnmatch(path, pattern[:-1])
+            return fnmatch.fnmatchcase(path, pattern[:-1])
 
         if not pattern.endswith("*"):
             pattern += "*"
 
-        return fnmatch.fnmatch(path, pattern)
+        return fnmatch.fnmatchcase(path, pattern)
 
     # pylint: disable=too-many-return-statements
     def can_fetch(self, useragent: str, url: str) -> bool:
