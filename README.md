@@ -232,8 +232,8 @@ Although `robotspy` does not have any dependencies other than packages in the Py
 
 * 0.4.0:
   * Fixed issue with robots text pointed by relative paths
-  * Integration of MyPy, Black and PyLint as depencencies to ease cross-platform development
-  * Limited make.bat build file for Windows
+  * Integration of [Mypy](http://mypy-lang.org/), [Black](https://github.com/psf/black) and [Pylint](https://www.pylint.org/) as depencencies to ease cross-platform development
+  * Limited `make.bat` build file for Windows
   * Git ignore vscode files, `tmp` directory, multiple virtual env (`.venv*`)
   * Fixed case insensitive issues on Windows
   * Tests successful on Windows
