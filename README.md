@@ -166,20 +166,28 @@ $ . .venv/bin/activate
 $
 ```
 
+On Windows:
+
+```
+C:/> git clone https://github.com/andreburgaud/robotspy
+C:/> cd robotspy
+C:/> python -m venv .venv --prompt robotspy
+C:/> .venv\scripts\activate
+(robotspy) $ python -m pip install -r requirements.txt
+(robotspy) $ python -m pip install -e .
+(robotspy) $ make test
+(robotspy) $ deactivate
+```
+
 Other dependencies are intended for deployment to the [Cheese Shop](https://wiki.python.org/moin/CheeseShop) ([PyPI](https://pypi.org/)):
 
 * [Wheel](https://pypi.org/project/wheel/0.22.0/)
 * [twine](https://pypi.org/project/twine/)
-
-See the build file, `Makefile`, for the commands and parameters.
-
-The `Makefile` also invokes the following tools:
-
 * [Black](https://github.com/psf/black)
 * [Mypy](http://mypy-lang.org/)
 * [Pylint](https://www.pylint.org/)
 
-At this stage of the development, version 0.3.1, the three development tools above are expected to be installed globally.
+See the build file, `Makefile`, for the commands and parameters.
 
 ### Dependency Tree
 
@@ -201,8 +209,23 @@ To display the reverse dependency tree of a particular package, `idna` in the ex
 $ pipdeptree --reverse --packages idna
 ```
 
+## Attributions
+
+Although `robotspy` does not have any dependencies other than packages in the Python standard libraries, a few tools are used for testing, validating, packaging and deploying this library. 
+
+You can consult the list of these tools, their respective versions, licenses and web sites by consulting [ATTRIBUTIONS](ATTRIBUTIONS.md). 
+
 ## Release History
 
+* 0.4.0:
+  * Fixed issue with robots text pointed by relative paths
+  * Integration of MyPy, Black and PyLint as depencencies to ease cross-platform development
+  * Limited make.bat build file for Windows
+  * Git ignore vscode files, `tmp` directory, multiple virtual env (`.venv*`)
+  * Fixed case insensitive issues on Windows
+  * Tests successful on Windows
+  * Added an ATRIBUTIONS files and build task to generate it
+  * Upgraded `pyparsing` and `certifi`
 * 0.3.3:
   * Upgraded `tqdm`, and `cryptography` packages
   * 0.3.2:
@@ -218,4 +241,4 @@ $ pipdeptree --reverse --packages idna
 
 ## License
 
-MIT License
+[MIT License](LICENSE.md)
