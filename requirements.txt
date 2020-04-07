@@ -48,4 +48,4 @@ typing-extensions==3.7.4.2
 urllib3==1.25.8
 wcwidth==0.1.9
 webencodings==0.5.1
-wrapt==1.11.2
+wrapt==1.12.1
