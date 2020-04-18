@@ -62,8 +62,8 @@ After installing `robotspy`, you can validate the installation by running the fo
 (playground) $ python -m robots --help
 usage: robots (<robots_path>|<robots_url>) <user_agent> <URI>
 
-Shows whether the given user agent and URI combination are allowed or
-disallowed by the given robots.txt file.
+Shows whether the given user agent and URI combination are allowed or disallowed
+by the given robots.txt file.
 
 positional arguments:
   robotstxt      robots.txt file path or URL
@@ -226,7 +226,7 @@ $ pipdeptree --reverse --packages idna
 
 ## Attributions
 
-Although `robotspy` does not have any dependencies other than packages in the Python standard libraries, a few tools are used for testing, validating, packaging and deploying this library. You can check out [ATTRIBUTIONS](ATTRIBUTIONS.md) that outlines tools with their respective versions, licenses and web sites URL's. 
+Although `robotspy` does not have any dependencies other than packages in the Python standard libraries, a few tools are used for testing, validating, packaging and deploying this library. You can check out [ATTRIBUTIONS](ATTRIBUTIONS.md) that outlines tools with their respective versions, licenses and web sites URL's.
 
 ## Release History
 
