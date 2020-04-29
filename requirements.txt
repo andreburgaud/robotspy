@@ -22,7 +22,7 @@ mypy==0.770
 mypy-extensions==0.4.3
 packaging==20.3
 pathspec==0.8.0
-pip-licenses==2.1.1
+pip-licenses==2.2.0
 pipdeptree==0.13.2
 pkginfo==1.5.0.1
 pluggy==0.13.1
