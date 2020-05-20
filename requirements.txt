@@ -20,7 +20,7 @@ mccabe==0.6.1
 more-itertools==8.3.0
 mypy==0.770
 mypy-extensions==0.4.3
-packaging==20.3
+packaging==20.4
 pathspec==0.8.0
 pip-licenses==2.2.0
 pipdeptree==0.13.2
