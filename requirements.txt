@@ -35,7 +35,7 @@ pyparsing==2.4.7
 pytest==5.4.3
 pywin32-ctypes==0.2.0
 readme-renderer==26.0
-regex==2020.6.8
+regex==2020.7.14
 requests==2.24.0
 requests-toolbelt==0.9.1
 SecretStorage==3.1.2
