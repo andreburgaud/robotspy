@@ -19,9 +19,11 @@ mypy-extensions==0.4.3
 packaging==20.8
 pathspec==0.8.1
 pip-chill==1.0.0
+pip-licenses==3.2.0
 pipdeptree==2.0.0
 pkginfo==1.6.1
 pluggy==0.13.1
+PTable==0.9.2
 py==1.10.0
 Pygments==2.7.3
 pylint==2.6.0
