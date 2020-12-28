@@ -20,7 +20,7 @@ except for some custom behaviors specific to Google Robots.
 
 ## Installation
 
-**Note**: Python 3.8.x is required
+**Note**: Python 3.8.x or 3.9.x required
 
 You preferably want to install the `robots` package after creating a Python virtual environment,
 in a newly created directory, as follows:
@@ -230,6 +230,8 @@ Although `robotspy` does not have any dependencies other than packages in the Py
 
 ## Release History
 
+* 0.5.0:
+  * Updated all libraries. Tested with Python 3.9.
 * 0.4.0:
   * Fixed issue with robots text pointed by relative paths
   * Integration of [Mypy](http://mypy-lang.org/), [Black](https://github.com/psf/black) and [Pylint](https://www.pylint.org/) as depencencies to ease cross-platform development
