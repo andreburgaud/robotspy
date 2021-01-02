@@ -11,7 +11,7 @@ docutils==0.16
 idna==2.10
 iniconfig==1.1.1
 isort==5.7.0
-keyring==21.7.0
+keyring==21.8.0
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
 mypy==0.790
