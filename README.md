@@ -158,7 +158,7 @@ $ python
 False
 ```
 
-Notice that the result is `False` whereas `robotspy` return `True`.
+Notice that the result is `False` whereas `robotspy` returns `True`.
 
 Bug [bpo-39187](https://bugs.python.org/issue39187) was open to raise awareness on this issue and PR
 https://github.com/python/cpython/pull/17794 was submitted as a possible fix. `robotspy` does not
