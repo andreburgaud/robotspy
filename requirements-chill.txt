@@ -1,6 +1,6 @@
 black==20.8b1
 mypy==0.790
-pip-chill==1.0.0
+pip-chill==1.0.1
 pip-licenses==3.2.0
 pipdeptree==2.0.0
 pylint==2.6.0
