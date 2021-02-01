@@ -16,7 +16,7 @@ lazy-object-proxy==1.4.3
 mccabe==0.6.1
 mypy==0.800
 mypy-extensions==0.4.3
-packaging==20.8
+packaging==20.9
 pathspec==0.8.1
 pip-chill==1.0.1
 pip-licenses==3.3.0
