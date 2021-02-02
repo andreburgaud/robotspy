@@ -1,9 +1,11 @@
 # Robots Exclusion Standard Parser for Python
 
 The `robots` Python module implements a parser for robots.txt file. The recommended class to use is
-`robots.RobotsParser`. Besides, a thin facade `robots.RobotFileParser` also exists to be used as
+`robots.RobotsParser`. 
+
+A thin facade `robots.RobotFileParser` also exists to be used as
 a substitute for [`urllib.robotparser.RobotFileParser`](https://docs.python.org/3/library/urllib.robotparser.html),
-available in the Python standard library. The facade `robots.RobotFileParser` exposes an API that is
+available in the Python standard library. The class `robots.RobotFileParser` exposes an API that is
 mostly compatible with `urllib.robotparser.RobotFileParser`.
 
 The main reasons for this rewrite are the following:
@@ -18,11 +20,83 @@ but it currently supports `sitemaps`.
 1. It satisfies the same tests as the [Google Robots.txt Parser](https://github.com/google/robotstxt),
 except for some custom behaviors specific to Google Robots.
 
+To use the Robotspy command line tool (CLI) available as a Docker container, read the following section. If you are interested in using Robotspy in a local Python environment or as a library, skip to section **Installation**.
+
+## Docker Image
+
+The Robotspy CLI, `robots`, is available as a [Docker](https://www.docker.com/) automated built image at https://hub.docker.com/r/andreburgaud/robotspy.
+
+If you already have [Docker](https://docs.docker.com/get-docker/) installed on your machine, first pull the image from Docker Hub:
+
+```
+$ docker pull andreburgaud/robotspy
+```
+
+Then, you can exercise the tool against the following remote Python `robots.txt` test file located at http://www.pythontest.net/elsewhere/robots.txt:
+
+```
+# Used by NetworkTestCase in Lib/test/test_robotparser.py
+
+User-agent: Nutch
+Disallow: /
+Allow: /brian/
+
+User-agent: *
+Disallow: /webstats/
+```
+
+The following examples demonstrate how to use the `robots` command line with the Docker container:
+
+```
+$ # Example 1: User agent "Johnny" is allowed to access path "/"
+$ docker run --rm andreburgaud/robotspy http://www.pythontest.net/elsewhere/robots.txt Johnny /
+user-agent 'Johnny' with URI '/': ALLOWED
+```
+
+```
+$ # Example 2:  User agent "Nutch" is not allowed to access path "/brian"
+$ docker run --rm andreburgaud/robotspy http://www.pythontest.net/elsewhere/robots.txt Nutch /brian
+user-agent 'Nutch' with URI '/brian': DISALLOWED
+```
+
+```
+$ # Example 3: User agent "Johnny" is not allowed to access path "/webstats/"
+docker run --rm andreburgaud/robotspy http://www.pythontest.net/elsewhere/robots.txt Johnny /webstats/
+user-agent 'Johnny' with URI '/webstats/': DISALLOWED
+```
+
+The arguments are the following:
+
+1. Location of the robots.txt file (`http://www.pythontest.net/elsewhere/robots.txt`)
+1. User agent name (`Johnny`)
+1. Path or URL (`/`)
+
+Without any argument, `robots` displays the help:
+
+```
+docker run --rm andreburgaud/robotspy
+usage: robots (<robots_path>|<robots_url>) <user_agent> <URI>
+
+Shows whether the given user agent and URI combination are allowed or
+disallowed by the given robots.txt file.
+
+positional arguments:
+  robotstxt      robots.txt file path or URL
+  useragent      User agent name
+  uri            Path or URI
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -v, --version  show program's version number and exit
+```
+
+To use **Robotspy** in a local Python environment or as a library in your own code, continue to the following sections.
+
 ## Installation
 
 **Note**: Python 3.8.x or 3.9.x required
 
-You preferably want to install the `robots` package after creating a Python virtual environment,
+You preferably want to install the `robotspy` package after creating a Python virtual environment,
 in a newly created directory, as follows:
 
 ```
@@ -51,7 +125,7 @@ C:/> .venv\scripts\activate
 
 ## Usage
 
-The `robots` package can be imported as a module and also exposes an executable invokable with
+The `robotspy` package can be imported as a module and also exposes an executable, `robots`, invocable with
 `python -m`.
 
 ### Execute the Package
