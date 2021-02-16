@@ -25,7 +25,7 @@ pkginfo==1.7.0
 pluggy==0.13.1
 PTable==0.9.2
 py==1.10.0
-Pygments==2.7.4
+Pygments==2.8.0
 pylint==2.6.0
 pyparsing==2.4.7
 pytest==6.2.2
