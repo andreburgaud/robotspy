@@ -1,5 +1,5 @@
 black==20.8b1
-mypy==0.800
+mypy==0.812
 pip-chill==1.0.1
 pip-licenses==3.3.0
 pipdeptree==2.0.0
