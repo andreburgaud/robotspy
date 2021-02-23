@@ -1,4 +1,4 @@
-FROM python:3.9.1-alpine3.12
+FROM python:3.9.2-alpine3.13
 
 ENV     ROBOTSPY_VERSION=0.5.1 \
         maintainer="andre.burgaud@gmail.com"
