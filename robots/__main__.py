@@ -21,7 +21,7 @@ def init_cli() -> argparse.ArgumentParser:
     """Initialize the argument parser to handle the command line interface."""
 
     cli: argparse.ArgumentParser = argparse.ArgumentParser(
-        usage="%(prog)s (<robots_path>|<robots_url>) <user_agent> <URI>",
+        usage="%(prog)s <robotstxt> <useragent> <path>",
         description=(
             "Shows whether the given user agent and URI combination "
             "are allowed or disallowed by the given robots.txt file."
@@ -33,7 +33,7 @@ def init_cli() -> argparse.ArgumentParser:
     )
     cli.add_argument("robotstxt", help="robots.txt file path or URL")
     cli.add_argument("useragent", help="User agent name")
-    cli.add_argument("uri", help="Path or URI")
+    cli.add_argument("path", help="Path or URL")
 
     return cli
 

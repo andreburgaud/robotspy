@@ -94,6 +94,8 @@ To use **Robotspy** in a local Python environment or as a library in your own co
 
 ## Installation
 
+### Module Installation
+
 **Note**: Python 3.8.x or 3.9.x required
 
 You preferably want to install the `robotspy` package after creating a Python virtual environment,
@@ -121,6 +123,17 @@ C:/> .venv\scripts\activate
 (playground) c:\> python -m pip install robotspy
 (playground) c:\> python -m robots --help
 ...
+```
+
+### Tool Only Installation 
+
+If you only want to use the command line tool `robots`, you may want to use pipx to install it as a global tool on your system.
+
+See [pipx Installation](https://pipxproject.github.io/pipx/installation/) for more information. When the tool is installed globally on your system, you can invoke it from any folder location. For example, you can execute:
+
+```bash
+$  robots --version
+robots 0.5.1
 ```
 
 ## Usage
