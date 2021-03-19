@@ -54,19 +54,19 @@ The following examples demonstrate how to use the `robots` command line with the
 ```
 $ # Example 1: User agent "Johnny" is allowed to access path "/"
 $ docker run --rm andreburgaud/robotspy http://www.pythontest.net/elsewhere/robots.txt Johnny /
-user-agent 'Johnny' with URI '/': ALLOWED
+user-agent 'Johnny' with path '/': ALLOWED
 ```
 
 ```
 $ # Example 2:  User agent "Nutch" is not allowed to access path "/brian"
 $ docker run --rm andreburgaud/robotspy http://www.pythontest.net/elsewhere/robots.txt Nutch /brian
-user-agent 'Nutch' with URI '/brian': DISALLOWED
+user-agent 'Nutch' with path '/brian': DISALLOWED
 ```
 
 ```
 $ # Example 3: User agent "Johnny" is not allowed to access path "/webstats/"
 docker run --rm andreburgaud/robotspy http://www.pythontest.net/elsewhere/robots.txt Johnny /webstats/
-user-agent 'Johnny' with URI '/webstats/': DISALLOWED
+user-agent 'Johnny' with path '/webstats/': DISALLOWED
 ```
 
 The arguments are the following:
@@ -79,14 +79,14 @@ Without any argument, `robots` displays the help:
 
 ```
 docker run --rm andreburgaud/robotspy
-usage: robots <robotstxt> <useragent> <uri>
+usage: robots <robotstxt> <useragent> <path>
 
-Shows whether the given user agent and URI combination are allowed or disallowed by the given robots.txt file.
+Shows whether the given user agent and path combination are allowed or disallowed by the given robots.txt file.
 
 positional arguments:
   robotstxt      robots.txt file path or URL
   useragent      User agent name
-  uri            Path or URI
+  path           Path or URI
 
 optional arguments:
   -h, --help     show this help message and exit
@@ -156,14 +156,14 @@ After installing `robotspy`, you can validate the installation by running the fo
 
 ```
 $ robots --help
-usage: robots <robotstxt> <useragent> <uri>
+usage: robots <robotstxt> <useragent> <path>
 
-Shows whether the given user agent and URI combination are allowed or disallowed by the given robots.txt file.
+Shows whether the given user agent and path combination are allowed or disallowed by the given robots.txt file.
 
 positional arguments:
   robotstxt      robots.txt file path or URL
   useragent      User agent name
-  uri            Path or URI
+  path           Path or URI
 
 optional arguments:
   -h, --help     show this help message and exit
@@ -189,35 +189,35 @@ To check if the user agent `Nutch` can fetch the path `/brian/` you can execute:
 
 ```
 $ robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
-user-agent 'Nutch' with URI '/brian/': ALLOWED
+user-agent 'Nutch' with path '/brian/': ALLOWED
 ```
 
 Or, you can also pass the full URL, http://www.pythontest.net/brian/:
 
 ```
 $ robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
-user-agent 'Nutch' with URI 'http://www.pythontest.net/brian/': ALLOWED
+user-agent 'Nutch' with url 'http://www.pythontest.net/brian/': ALLOWED
 ```
 
 Can user agent `Nutch` fetch the path `/brian`?
 
 ```
 $ robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian
-user-agent 'Nutch' with URI '/brian': DISALLOWED
+user-agent 'Nutch' with path '/brian': DISALLOWED
 ```
 
 Or, `/`?
 
 ```
 $ robots http://www.pythontest.net/elsewhere/robots.txt Nutch /
-user-agent 'Nutch' with URI '/': DISALLOWED
+user-agent 'Nutch' with path '/': DISALLOWED
 ```
 
 How about user agent `Johnny`?
 
 ```
 $ robots http://www.pythontest.net/elsewhere/robots.txt Johnny /
-user-agent 'Johnny' with URI '/': ALLOWED
+user-agent 'Johnny' with path '/': ALLOWED
 ```
 
 ### Use the Module in a Project
@@ -302,6 +302,9 @@ See the build file, `Makefile` or `make.bat` on Windows, for the commands and pa
 
 ## Release History
 
+* 0.7.0:
+  * Fixed bug with the argument path when using the CLI
+  * Print 'url' when the argument is a URL, 'path' otherwise
 * 0.6.0:
   * Simplified dependencies by keeping only `pytest` in `requirements.txt`
 * 0.5.0:

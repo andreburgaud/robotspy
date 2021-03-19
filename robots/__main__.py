@@ -70,10 +70,11 @@ def main() -> None:
     robots_uri = normalize_uri(args.robotstxt)
     robots_parser = create_robots(robots_uri)
 
-    allowed = robots_parser.can_fetch(args.useragent, args.uri)
+    allowed = robots_parser.can_fetch(args.useragent, args.path)
 
     allowed_str = "ALLOWED" if allowed else "DISALLOWED"
-    print(f"user-agent '{args.useragent}' with URI '{args.uri}': {allowed_str}")
+    url_or_path = "url" if is_url(args.path) else "path"
+    print(f"user-agent '{args.useragent}' with {url_or_path} '{args.path}': {allowed_str}")
 
     if errors := robots_parser.errors:
         for error in errors:
