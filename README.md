@@ -1,17 +1,17 @@
 # Robots Exclusion Standard Parser for Python
 
-The `robots` Python module implements a parser for robots.txt file. The recommended class to use is
+The `robotspy` Python module implements a parser for `robots.txt` files. The recommended class to use is
 `robots.RobotsParser`. 
 
-A thin facade `robots.RobotFileParser` also exists to be used as
+A thin facade `robots.RobotFileParser` can also be used as
 a substitute for [`urllib.robotparser.RobotFileParser`](https://docs.python.org/3/library/urllib.robotparser.html),
 available in the Python standard library. The class `robots.RobotFileParser` exposes an API that is
 mostly compatible with `urllib.robotparser.RobotFileParser`.
 
 The main reasons for this rewrite are the following:
 
-1. It was initially intended to experiment with parsing `robots.txt` for a link checker project
-(not implemented).
+1. It was initially intended to experiment with parsing `robots.txt` files for a link checker project
+(not implemented yet).
 1. It is attempting to follow the latest internet draft
 [Robots Exclusion Protocol](https://tools.ietf.org/html/draft-koster-rep-00).
 1. It does not try to be compliant with commonly accepted directives that are not in the current
@@ -20,7 +20,11 @@ but it currently supports `sitemaps`.
 1. It satisfies the same tests as the [Google Robots.txt Parser](https://github.com/google/robotstxt),
 except for some custom behaviors specific to Google Robots.
 
-To use the Robotspy command line tool (CLI) available as a Docker container, read the following section. If you are interested in using Robotspy in a local Python environment or as a library, skip to section **Installation**.
+To use the `robots` command line tool (CLI) in a Docker container, read the following section **Docker Image**.
+
+To install `robotspy` globally as a tool on your system with `pipx` skip to the **Global Installation** section.
+
+If you are interested in using `robotspy` in a local Python environment or as a library, skip to section **Module Installation**.
 
 ## Docker Image
 
@@ -75,10 +79,9 @@ Without any argument, `robots` displays the help:
 
 ```
 docker run --rm andreburgaud/robotspy
-usage: robots (<robots_path>|<robots_url>) <user_agent> <URI>
+usage: robots <robotstxt> <useragent> <uri>
 
-Shows whether the given user agent and URI combination are allowed or
-disallowed by the given robots.txt file.
+Shows whether the given user agent and URI combination are allowed or disallowed by the given robots.txt file.
 
 positional arguments:
   robotstxt      robots.txt file path or URL
@@ -90,11 +93,28 @@ optional arguments:
   -v, --version  show program's version number and exit
 ```
 
-To use **Robotspy** in a local Python environment or as a library in your own code, continue to the following sections.
+To use the CLI `robots` as a global tools, continue to the following section. If you want to use `robotspy` as a Python module, skip to **Module Installation**.
 
-## Installation
+## Global Installation with pipx
 
-### Module Installation
+If you only want to use the command line tool `robots`, you may want to use [pipx](https://pipxproject.github.io/pipx/installation/) to install it as a global tool on your system.
+
+To install `robotspy` using `pipx` execute the following command:
+
+```bash
+$  pipx install robotspy
+```
+
+When `robotspy` is installed globally on your system, you can invoke it from any folder locations. For example, you can execute:
+
+```bash
+$  robots --version
+robots 0.5.1
+```
+
+You can see more detailed usages in section **Usage**.
+
+## Module Installation
 
 **Note**: Python 3.8.x or 3.9.x required
 
@@ -103,12 +123,12 @@ in a newly created directory, as follows:
 
 ```
 $ mkdir project && cd project
-$ python -m venv .venv --prompt playground
+$ python -m venv .venv
 $ . .venv/bin/activate
-(playground) $ python -m pip install --upgrade pip
-(playground) $ python -m pip install --upgrade setuptools
-(playground) $ python -m pip install robotspy
-(playground) $ python -m robots --help
+(.venv) $ python -m pip install --upgrade pip
+(.venv) $ python -m pip install --upgrade setuptools
+(.venv) $ python -m pip install robotspy
+(.venv) $ python -m robots --help
 ...
 ```
 
@@ -116,41 +136,29 @@ On Windows:
 
 ```
 C:/> mkdir project && cd project
-C:/> python -m venv .venv --prompt playground
+C:/> python -m venv .venv
 C:/> .venv\scripts\activate
-(playground) c:\> python -m pip install --upgrade pip
-(playground) c:\> python -m pip install --upgrade setuptools
-(playground) c:\> python -m pip install robotspy
-(playground) c:\> python -m robots --help
+(.venv) c:\> python -m pip install --upgrade pip
+(.venv) c:\> python -m pip install --upgrade setuptools
+(.venv) c:\> python -m pip install robotspy
+(.venv) c:\> python -m robots --help
 ...
-```
-
-### Tool Only Installation 
-
-If you only want to use the command line tool `robots`, you may want to use pipx to install it as a global tool on your system.
-
-See [pipx Installation](https://pipxproject.github.io/pipx/installation/) for more information. When the tool is installed globally on your system, you can invoke it from any folder location. For example, you can execute:
-
-```bash
-$  robots --version
-robots 0.5.1
 ```
 
 ## Usage
 
 The `robotspy` package can be imported as a module and also exposes an executable, `robots`, invocable with
-`python -m`.
+`python -m`. If installed globally with `pipx`, the command `robots` can be invoked from any folders. The usage examples in the following section use the command `robots`, but you can also substitute it with `python -m robots` in a virtual environment.
 
-### Execute the Package
+### Execute the Tool
 
 After installing `robotspy`, you can validate the installation by running the following command:
 
 ```
-(playground) $ python -m robots --help
-usage: robots (<robots_path>|<robots_url>) <user_agent> <URI>
+$ robots --help
+usage: robots <robotstxt> <useragent> <uri>
 
-Shows whether the given user agent and URI combination are allowed or disallowed
-by the given robots.txt file.
+Shows whether the given user agent and URI combination are allowed or disallowed by the given robots.txt file.
 
 positional arguments:
   robotstxt      robots.txt file path or URL
@@ -180,44 +188,44 @@ Disallow: /webstats/
 To check if the user agent `Nutch` can fetch the path `/brian/` you can execute:
 
 ```
-(playground) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
+$ robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
 user-agent 'Nutch' with URI '/brian/': ALLOWED
 ```
 
 Or, you can also pass the full URL, http://www.pythontest.net/brian/:
 
 ```
-(playground) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
+$ robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian/
 user-agent 'Nutch' with URI 'http://www.pythontest.net/brian/': ALLOWED
 ```
 
 Can user agent `Nutch` fetch the path `/brian`?
 
 ```
-(playground) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian
+$ robots http://www.pythontest.net/elsewhere/robots.txt Nutch /brian
 user-agent 'Nutch' with URI '/brian': DISALLOWED
 ```
 
 Or, `/`?
 
 ```
-(playground) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Nutch /
+$ robots http://www.pythontest.net/elsewhere/robots.txt Nutch /
 user-agent 'Nutch' with URI '/': DISALLOWED
 ```
 
 How about user agent `Johnny`?
 
 ```
-(playground) $ python -m robots http://www.pythontest.net/elsewhere/robots.txt Johnny /
+$ robots http://www.pythontest.net/elsewhere/robots.txt Johnny /
 user-agent 'Johnny' with URI '/': ALLOWED
 ```
 
 ### Use the Module in a Project
 
-Here is an example with the same data as above, using the `robots` package from the Python shell:
+If you have a virtual environment with the `robotspy` package installed, you can use the `robots` module from the Python shell:
 
 ```
-(playground) $ python
+(.venv) $ python
 >>> import robots
 >>> parser = robots.RobotsParser.from_uri('http://www.pythontest.net/elsewhere/robots.txt')
 >>> useragent = 'Nutch'
@@ -259,12 +267,12 @@ installed if you perform the following steps:
 ```
 $ git clone https://github.com/andreburgaud/robotspy
 $ cd robotspy
-$ python -m venv .venv --prompt robotspy
+$ python -m venv .venv --prompt robots
 $ . .venv/bin/activate
-(robotspy) $ python -m pip install -r requirements.txt
-(robotspy) $ python -m pip install -e .
-(robotspy) $ make test
-(robotspy) $ deactivate
+(robots) $ python -m pip install -r requirements.txt
+(robots) $ python -m pip install -e .
+(robots) $ make test
+(robots) $ deactivate
 $
 ```
 
@@ -275,48 +283,27 @@ C:/> git clone https://github.com/andreburgaud/robotspy
 C:/> cd robotspy
 C:/> python -m venv .venv --prompt robotspy
 C:/> .venv\scripts\activate
-(robotspy) c:\> python -m pip install -r requirements.txt
-(robotspy) c:\> python -m pip install -e .
-(robotspy) c:\> make test
-(robotspy) c:\> deactivate
+(robots) c:\> python -m pip install -r requirements.txt
+(robots) c:\> python -m pip install -e .
+(robots) c:\> make test
+(robots) c:\> deactivate
 ```
 
-Other dependencies are intended for deployment to the [Cheese Shop](https://wiki.python.org/moin/CheeseShop) ([PyPI](https://pypi.org/)):
+## Global Tools
 
-* [Wheel](https://pypi.org/project/wheel/0.22.0/)
-* [twine](https://pypi.org/project/twine/)
+The following tools were used during the development of `robotspy`:
+
 * [Black](https://github.com/psf/black)
 * [Mypy](http://mypy-lang.org/)
 * [Pylint](https://www.pylint.org/)
+* [twine](https://pypi.org/project/twine/)
 
 See the build file, `Makefile` or `make.bat` on Windows, for the commands and parameters.
 
-### Dependency Tree
-
-To display the dependency tree:
-
-```
-$ pipdeptree
-```
-
-or
-
-```
-$ make tree
-```
-
-To display the reverse dependency tree of a particular package, `idna` in the example below:
-
-```
-$ pipdeptree --reverse --packages idna
-```
-
-## Attributions
-
-Although `robotspy` does not have any dependencies other than packages in the Python standard libraries, a few tools are used for testing, validating, packaging and deploying this library. You can check out [ATTRIBUTIONS](ATTRIBUTIONS.md) that outlines tools with their respective versions, licenses and web sites URL's.
-
 ## Release History
 
+* 0.6.0:
+  * Simplified dependencies by keeping only `pytest` in `requirements.txt`
 * 0.5.0:
   * Updated all libraries. Tested with Python 3.9.
 * 0.4.0:
