@@ -109,7 +109,7 @@ When `robotspy` is installed globally on your system, you can invoke it from any
 
 ```bash
 $  robots --version
-robots 0.5.1
+robots 0.6.0
 ```
 
 You can see more detailed usages in section **Usage**.
