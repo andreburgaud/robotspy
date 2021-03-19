@@ -21,7 +21,7 @@ difflib:
 	diff -w <(pip freeze) <(cat requirements.txt)
 
 
-dist: freeze licenses version test clean wheel check
+dist: freeze version test clean wheel check
 
 # black installed globally
 fmt:
