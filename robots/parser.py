@@ -295,8 +295,7 @@ class RobotsParser:
                     current_rules = []
                 state = State.AGENT
                 current_agents.append(token.value.lower())
-            # Mypy issue https://github.com/python/mypy/issues/7316
-            elif token.type == TokenType.ALLOW or token.type == TokenType.DISALLOW:
+            elif token.type in (TokenType.ALLOW, TokenType.DISALLOW):
                 if state == State.BEGIN:
                     self._warnings.append(
                         (
