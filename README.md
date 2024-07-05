@@ -3,22 +3,17 @@
 The `robotspy` Python module implements a parser for `robots.txt` files. The recommended class to use is
 `robots.RobotsParser`. 
 
-A thin facade `robots.RobotFileParser` can also be used as
-a substitute for [`urllib.robotparser.RobotFileParser`](https://docs.python.org/3/library/urllib.robotparser.html),
-available in the Python standard library. The class `robots.RobotFileParser` exposes an API that is
-mostly compatible with `urllib.robotparser.RobotFileParser`.
+A thin facade `robots.RobotFileParser` can also be used as  a substitute for [`urllib.robotparser.RobotFileParser`](https://docs.python.org/3/library/urllib.robotparser.html),
+available in the Python standard library. The class `robots.RobotFileParser` exposes an API that is mostly compatible
+with `urllib.robotparser.RobotFileParser`.
 
 The main reasons for this rewrite are the following:
 
-1. It was initially intended to experiment with parsing `robots.txt` files for a link checker project
-(not implemented yet).
-1. It is attempting to follow the latest internet draft
-[Robots Exclusion Protocol](https://tools.ietf.org/html/draft-koster-rep-00).
-1. It does not try to be compliant with commonly accepted directives that are not in the current
-[specs](https://tools.ietf.org/html/draft-koster-rep-00) such as `request-rate` and `crawl-delay`,
-but it currently supports `sitemaps`.
-1. It satisfies the same tests as the [Google Robots.txt Parser](https://github.com/google/robotstxt),
-except for some custom behaviors specific to Google Robots.
+1. It was initially intended to experiment with parsing `robots.txt` files for a link checker project (not implemented yet).
+1. It (mostly) follows the specs from the [RFC 9309 - Robots Exclusion Protocol](https://www.rfc-editor.org/rfc/rfc9309).
+1. It does not try to be compliant with commonly accepted directives that are not in the current specs such as `request-rate` 
+and `crawl-delay`, but it currently supports `sitemaps`.
+1. It satisfies the same tests as the [Google Robots.txt Parser](https://github.com/google/robotstxt), except for some custom behaviors specific to Google Robots.
 
 To use the `robots` command line tool (CLI) in a Docker container, read the following section **Docker Image**.
 
@@ -109,7 +104,7 @@ When `robotspy` is installed globally on your system, you can invoke it from any
 
 ```bash
 $  robots --version
-robots 0.6.0
+robots 0.8.0
 ```
 
 You can see more detailed usages in section **Usage**.
