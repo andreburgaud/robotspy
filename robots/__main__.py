@@ -23,8 +23,8 @@ def init_cli() -> argparse.ArgumentParser:
     cli: argparse.ArgumentParser = argparse.ArgumentParser(
         usage="%(prog)s <robotstxt> <useragent> <path>",
         description=(
-            "Shows whether the given user agent and URI combination "
-            "are allowed or disallowed by the given robots.txt file."
+            "Shows whether a given user agent and path/url combination "
+            "is allowed or disallowed by a given robots.txt file."
         ),
     )
     cli.prog = __package__
