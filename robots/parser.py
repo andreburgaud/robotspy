@@ -2,8 +2,7 @@
 Alternate implementation of RobotParser (alternative to standard library urllib.robotparser)
 
 Reference:
-Robots Exclusion Protocol (REP) draft-koster-rep-01
-https://tools.ietf.org/html/draft-koster-rep
+Robots Exclusion Protocol (REP) https://www.rfc-editor.org/rfc/rfc9309
 """
 
 from typing import Dict, Iterator, List, NamedTuple, Tuple, Type, TypeVar
@@ -29,12 +28,12 @@ RE_AGENT = re.compile(
 )
 
 RE_SITEMAP = re.compile(
-    r"^\s*sitemap\s*:\s*(?P<SITEMAP>https?:\/\/[^\n\s]+)\s*$",
+    r"^\s*sitemap\s*:\s*(?P<SITEMAP>https?://[^\n\s]+)\s*$",
     re.IGNORECASE | re.VERBOSE,
 )
 
 # Product token in the user-agent line:
-RE_PRODUCT = re.compile(r"(?:^[a-zA-Z_-]+$|\*)")
+RE_PRODUCT = re.compile(r"^[a-zA-Z_-]+$|\*")
 
 # Rule allow
 RE_RULE_ALLOW = re.compile(
@@ -128,7 +127,7 @@ T = TypeVar("T", bound="RobotsParser")
 
 class RobotsParser:
     """Encapsulates functions and data to parse a robotstxt file and get
-    feedback on what a crawler is allowed to access to on a given web site.
+    feedback on what a crawler is allowed to access to on a given website.
     """
 
     AGENT_NOT_VALID = "User agent [%s] is not valid"
@@ -164,7 +163,7 @@ class RobotsParser:
     @url.setter
     def url(self, url):
         """Set the url (example: 'https://www.example.com/robots.txt'), the path of the robots.txt
-        file (example: '/robots.txt') and the hostname (example 'www.example.com').
+        file, example: '/robots.txt', and the hostname, example 'www.example.com'.
 
         It discards the scheme ('http' or 'https') for compatibility with the Python standard
         library module 'urllib.robotparser'."""
@@ -210,20 +209,26 @@ class RobotsParser:
     def gen_uri(self, uri: str):
         """Instantiate a generator from a URI (either http:// or https:// or file:///"""
         try:
-            with urllib.request.urlopen(uri) as f:
+            req = urllib.request.Request(uri, headers={'User-Agent': 'RobotsPy'})
+            with urllib.request.urlopen(req) as f:
                 self._time = time.time()
                 for line in f:
-                    yield line.decode("utf-8")
+                    try:
+                        yield line.decode("utf-8")
+                    except UnicodeDecodeError as err:
+                        self.allow_all = True
+                        self._errors.append(("robots.txt must be UTF-8 encoded", f"{str(err)} for {uri}"))
+                        return
         except urllib.error.HTTPError as err:
             if err.code in (401, 403):
                 self.disallow_all = True
-                self._errors.append((str(err.code), str(err)))
+                self._errors.append((str(err.code), f"{str(err)} for {uri}"))
             elif 400 <= err.code < 500:
                 self.allow_all = True
-                self._warnings.append((str(err.code), str(err)))
+                self._warnings.append((str(err.code), f"{str(err)} for {uri}"))
             self._time = 0
         except urllib.error.URLError as err:
-            self._errors.append(("", str(err)))
+            self._errors.append(("", f"{str(err)} for {uri}"))
 
     @classmethod
     def from_uri(cls: Type[T], uri: str) -> T:
@@ -360,7 +365,7 @@ class RobotsParser:
 
         # extract the path portion of the URL as-is (e.g. preserve a standalone ?)
         host_url = urllib.parse.urlunsplit((result.scheme, result.netloc, "", "", ""))
-        path = url[len(host_url) :] or "/"
+        path = url[len(host_url):] or "/"
         return result.netloc, RobotsParser.dedup_slash(path)
 
     @staticmethod

@@ -44,6 +44,12 @@ def test_can_fetch(agent, path, allowed, parser):
 
 
 def test_404():
-    p = robots.RobotsParser.from_uri('http://example.com/non_existing_robots.txt')
+    p = robots.RobotsParser.from_uri('https://robotspy.org/non_existing_robots.txt')
     assert p.allow_all  # no robots file => allow access to all paths
+    assert p.can_fetch('FooBot', '/admin')
+
+
+def test_utf16():
+    p = robots.RobotsParser.from_uri('https://robotspy.org/tests/robots_utf16.txt')
+    assert p.allow_all  # robots file with unexpected encoding (must be UTF-8) => allow access to all paths
     assert p.can_fetch('FooBot', '/admin')
