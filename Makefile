@@ -28,7 +28,7 @@ fmt:
 	black robots
 
 freeze:
-	pip freeze | grep -v robotspy > requirements.txt
+	pip-chill | grep -v robotspy > requirements.txt
 
 help:
 	@echo 'Makefile for RobotsPy (Python robots.txt parser)'
