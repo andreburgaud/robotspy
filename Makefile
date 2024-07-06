@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := help
+PROJECT := robotspy
 VERSION := $(shell echo `grep __version__ robots/__init__.py | cut -d '"' -f 2`)
 
 # twine installed globally
@@ -23,6 +24,17 @@ difflib:
 
 dist: freeze version test clean wheel check
 
+docker:
+	docker build -t 'andreburgaud/${PROJECT}:${VERSION}' .
+
+docker-scout: docker
+	docker scout cves 'andreburgaud/${PROJECT}:${VERSION}'
+
+docker-deploy: docker-scout
+	docker push 'docker.io/andreburgaud/${PROJECT}:${VERSION}'
+	docker tag 'andreburgaud/${PROJECT}:${VERSION}' 'docker.io/andreburgaud/${PROJECT}:latest'
+	docker push 'docker.io/andreburgaud/${PROJECT}:latest'
+
 # black installed globally
 fmt:
 	black robots
@@ -39,6 +51,9 @@ help:
 	@echo '    make deploy        Deploy package to the Cheese Shop (PyPI)'
 	@echo '    make difflib       Identify differences between libraries installed and requirement.txt file'
 	@echo '    make dist          Clean, generate the distribution and check'
+	@echo '    make docker        Build a docker image using the Dockerfile at the root of hte repo'
+	@echo '    make docker-scout  Validate the image against CVEs (requires docker scout to be installed on the build system)'
+	@echo '    make docker-deploy Push the docker image to Docker Hub (requires a docker hub account)'
 	@echo '    make fmt           Format Python files using Black (installed globally)'
 	@echo '    make freeze        Update the requirements.txt excluding local package (robotspy)'
 	@echo '    make help          Display this help message'

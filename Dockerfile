@@ -1,4 +1,6 @@
-FROM python:3.9.2-alpine3.13
+# syntax=docker/dockerfile:1
+
+FROM python:3.12.4-alpine3.19
 
 ENV     ROBOTSPY_VERSION=0.8.0 \
         maintainer="andre.burgaud@gmail.com"
