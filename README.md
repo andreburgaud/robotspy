@@ -297,6 +297,11 @@ See the build file, `Makefile` or `make.bat` on Windows, for the commands and pa
 
 ## Release History
 
+* 0.8.0:
+  * Addressed an issue raised when a robots.txt file is not UTF-8 encoded
+  * Added a user agent to fetch the robots.txt, as some websites, such as pages hosted on Cloudflare, may return a 403 error
+  * Updated the documentation to link to RFC 9309, Robots Exclusion Protocol (REP)
+  * Added a GitHub action job to execute the tests against Python versions 3.8 to 3.12
 * 0.7.0:
   * Fixed bug with the argument path when using the CLI
   * Print 'url' when the argument is a URL, 'path' otherwise
