@@ -77,7 +77,7 @@ test:
 
 # mypy installed globally
 type:
-	mypy robots
+	mypy --check-untyped-defs robots
 
 version:
 	@echo 'robots version: ${VERSION}'
