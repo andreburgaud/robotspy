@@ -143,7 +143,7 @@ class RobotsParser:
         self.allow_all = False
         self._host = ""
         self._path = "/robots.txt"
-        self._time = 0  # Time the robots.txt is fetched
+        self._time = 0.0  # Time the robots.txt is fetched
 
     @property
     def errors(self):
