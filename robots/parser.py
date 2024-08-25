@@ -23,7 +23,7 @@ RE_AGENT_TOKEN = re.compile(r"^[a-zA-Z_-]+$")
 # Note: the hash character ('#') needs to be escaped in VERBOSE mode, otherwise it would be
 # interpreted as a comment.
 RE_AGENT = re.compile(
-    r"^\s*user-agent\s*:\s*(?P<AGENT>\*|[a-zA-Z_-]+)\s*(?:\#.*)?$",
+    r"^\s*user-agent\s*:\s*(?P<AGENT>\*|[a-zA-Z_-]+)[^]s]*\s*(?:\#.*)?$",
     re.IGNORECASE | re.VERBOSE,
 )
 
