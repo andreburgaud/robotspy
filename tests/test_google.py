@@ -242,15 +242,15 @@ agent_case_insensitive_google_data = (
     [robots_upper, 'Foo', url_allowed, ALLOWED],
     [robots_lower, 'Foo', url_allowed, ALLOWED],
     [robots_camel, 'Foo', url_allowed, ALLOWED],
-    [robots_upper, 'Foo', url_disallowed, ALLOWED],
-    [robots_lower, 'Foo', url_disallowed, ALLOWED],
-    [robots_camel, 'Foo', url_disallowed, ALLOWED],
+    [robots_upper, 'Foo', url_disallowed, DISALLOWED],
+    [robots_lower, 'Foo', url_disallowed, DISALLOWED],
+    [robots_camel, 'Foo', url_disallowed, DISALLOWED],
     [robots_upper, 'foo', url_allowed, ALLOWED],
     [robots_lower, 'foo', url_allowed, ALLOWED],
     [robots_camel, 'foo', url_allowed, ALLOWED],
-    [robots_upper, 'foo', url_disallowed, ALLOWED],
-    [robots_lower, 'foo', url_disallowed, ALLOWED],
-    [robots_camel, 'foo', url_disallowed, ALLOWED],
+    [robots_upper, 'foo', url_disallowed, DISALLOWED],
+    [robots_lower, 'foo', url_disallowed, DISALLOWED],
+    [robots_camel, 'foo', url_disallowed, DISALLOWED],
 )
 
 
