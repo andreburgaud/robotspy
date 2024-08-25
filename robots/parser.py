@@ -337,7 +337,9 @@ class RobotsParser:
         rules for wild card agent ('*'), if no rule for '*', return empty list.
         """
 
-        rules = self.agents_rules.get(agent, self.agents_rules.get("*", []))
+        # Crawlers MUST use case-insensitive matching to find the group that matches the product token =>
+        # convert the product token (agent) to lower case.
+        rules = self.agents_rules.get(agent.lower(), self.agents_rules.get("*", []))
         return rules
 
     @staticmethod
@@ -400,7 +402,7 @@ class RobotsParser:
         if host and self.host and host != self.host:
             return False
 
-        rules = self.find_rules(useragent.lower())
+        rules = self.find_rules(useragent)
 
         for rule in rules:
             # $ is a special character for robots and indicate the exact end of the pattern
