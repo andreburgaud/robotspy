@@ -69,7 +69,7 @@ lint:
 
 tag:
 	git push
-	git tag -a ${VERSION} -m 'Version ${TAG}'
+	git tag -a ${VERSION} -m 'Version ${VERSION}'
 	git push --tags
 
 test:
