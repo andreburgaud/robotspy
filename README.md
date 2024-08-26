@@ -297,6 +297,8 @@ See the build file, `Makefile` or `make.bat` on Windows, for the commands and pa
 
 ## Release History
 
+* 0.9.0:
+  * Updated the parser to behave like the Google robots parser. It now handles the product token in the user-agent line up to the last correct character instead of discarding it. See [issue #209](https://github.com/andreburgaud/robotspy/issues/209) for more details.
 * 0.8.0:
   * Addressed an issue raised when a robots.txt file is not UTF-8 encoded
   * Added a user agent to fetch the robots.txt, as some websites, such as pages hosted on Cloudflare, may return a 403 error
