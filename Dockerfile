@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.12.4-alpine3.19
+FROM python:3.12.5-alpine3.20
 
-ENV     ROBOTSPY_VERSION=0.8.0 \
+ENV     ROBOTSPY_VERSION=0.9.0 \
         maintainer="andre.burgaud@gmail.com"
 
 LABEL   robotspy.version=$ROBOTSPY_VERSION
