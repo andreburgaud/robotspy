@@ -1,0 +1,1 @@
+# From https://github.com/google/robotstxt-spec-test/tree/master/src/main/resources/CTC/correctness
