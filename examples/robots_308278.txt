@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /asdf-login
+Disallow: /asdf-admin
+Disallow: /databack/
+Disallow: /data/*
+Disallow: /?*/
+Disallow: /author/
+Disallow: /id/*/page/
+Disallow: /id/*/data/
+Sitemap: http://example.com/page-sitemap.xml
