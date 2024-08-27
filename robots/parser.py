@@ -383,6 +383,10 @@ class RobotsParser:
         if not pattern.endswith("*"):
             pattern += "*"
 
+        # In unix file name pattern a `?' is a single character. In a url path, it is a '?'. To take it as character
+        # replace with [?] (https://docs.python.org/3/library/fnmatch.html)
+        pattern = pattern.replace("?", "[?]")
+
         return fnmatch.fnmatchcase(path, pattern)
 
     # pylint: disable=too-many-return-statements
@@ -399,6 +403,7 @@ class RobotsParser:
             return False
 
         host, path = RobotsParser.normalize_url(url)
+
         if host and self.host and host != self.host:
             return False
 
