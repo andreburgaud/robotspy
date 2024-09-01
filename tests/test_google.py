@@ -73,7 +73,7 @@ bar: /
 """
 
 linesyntax_line_incorrect_accepted = """
-# ID_LineSyntax_Line (incorrect accepted by Google)
+# ID_LineSyntax_Line (mistake - missing ":" - accepted by Google
 
 user-agent FooBot
 disallow /
@@ -84,7 +84,7 @@ url = 'http://foo.bar/x/y'
 linesyntax_line_data = (
     [linesyntax_line_correct, FOOBOT_AGENT, url, DISALLOWED],
     [linesyntax_line_incorrect, FOOBOT_AGENT, url, ALLOWED],
-    [linesyntax_line_incorrect_accepted, FOOBOT_AGENT, url, ALLOWED],  # DISALLOWED for Google robots
+    [linesyntax_line_incorrect_accepted, FOOBOT_AGENT, url, DISALLOWED],
 )
 
 
