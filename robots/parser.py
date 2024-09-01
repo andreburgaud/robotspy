@@ -23,7 +23,7 @@ RE_AGENT_TOKEN = re.compile(r"^[a-zA-Z_-]+$")
 # Note: the hash character ('#') needs to be escaped in VERBOSE mode, otherwise it would be
 # interpreted as a comment.
 RE_AGENT = re.compile(
-    r"^\s*user-agent\s*:\s*(?P<AGENT>\*|[a-zA-Z_-]+)[^]s]*\s*(?:\#.*)?$",
+    r"^\s*user-agent\s*:?\s*(?P<AGENT>\*|[a-zA-Z_-]+)[^]s]*\s*(?:\#.*)?$",
     re.IGNORECASE | re.VERBOSE,
 )
 
@@ -37,13 +37,13 @@ RE_PRODUCT = re.compile(r"^[a-zA-Z_-]+$|\*")
 
 # Rule allow
 RE_RULE_ALLOW = re.compile(
-    r"^\s*(?P<RULE>allow)\s*:\s*(?P<PATH>\*|[^\s#]+)?\s*(?:\#.*)?$",
+    r"^\s*(?P<RULE>allow)\s*:?\s*(?P<PATH>\*|[^\s#]+)?\s*(?:\#.*)?$",
     re.IGNORECASE | re.VERBOSE,
 )
 
 # Rule disallow
-RE_RULE_DISSALLOW = re.compile(
-    r"^\s*(?P<RULE>disallow)\s*:\s*(?P<PATH>\*|[^\s#]+)?\s*(?:\#.*)?$",
+RE_RULE_DISALLOW = re.compile(
+    r"^\s*(?P<RULE>disallow)\s*:?\s*(?P<PATH>\*|[^\s#]+)?\s*(?:\#.*)?$",
     re.IGNORECASE | re.VERBOSE,
 )
 
@@ -112,7 +112,7 @@ def gen_tokens(gen_func, source):
         elif m := RE_RULE_ALLOW.match(line):
             path = m.group("PATH")
             yield Token(TokenType.ALLOW, path, linenum)
-        elif m := RE_RULE_DISSALLOW.match(line):
+        elif m := RE_RULE_DISALLOW.match(line):
             path = m.group("PATH")
             yield Token(TokenType.DISALLOW, path, linenum)
         elif m := RE_SITEMAP.match(line):
@@ -214,7 +214,7 @@ class RobotsParser:
                 self._time = time.time()
                 for line in f:
                     try:
-                        yield line.decode("utf-8")
+                        yield line.decode("utf-8-sig") # uft-8-sig to handle BOM characters
                     except UnicodeDecodeError as err:
                         self.allow_all = True
                         self._errors.append(("robots.txt must be UTF-8 encoded", f"{str(err)} for {uri}"))
@@ -402,7 +402,10 @@ class RobotsParser:
         if self.disallow_all:
             return False
 
+        print(f"{url=}")
+
         host, path = RobotsParser.normalize_url(url)
+        print(f"{host=}, {path=}")
 
         if host and self.host and host != self.host:
             return False
