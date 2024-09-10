@@ -1,4 +1,4 @@
 attrs==24.2.0
 pip-chill==1.0.3
-pytest==8.3.2
+pytest==8.3.3
 toml==0.10.2
