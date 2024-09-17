@@ -16,6 +16,8 @@ import urllib.parse
 import urllib.error
 import urllib.request
 
+import robots
+
 # Pattern used to validate a user agent token (not used by the parser)
 RE_AGENT_TOKEN = re.compile(r"^[a-zA-Z_-]+$")
 
@@ -141,6 +143,7 @@ class RobotsParser:
         self.url = url
         self.disallow_all = False
         self.allow_all = False
+        self.timeout = 5
         self._host = ""
         self._path = "/robots.txt"
         self._time = 0.0  # Time the robots.txt is fetched
@@ -208,10 +211,12 @@ class RobotsParser:
 
     def gen_uri(self, uri: str):
         """Instantiate a generator from a URI (either http:// or https:// or file:///"""
+
         try:
-            req = urllib.request.Request(uri, headers={'User-Agent': 'RobotsPy'})
-            with urllib.request.urlopen(req) as f:
-                self._time = time.time()
+            useragent = f"robotspy/{robots.__version__}"
+            req = urllib.request.Request(uri, headers={'User-Agent': useragent})
+            self.timestamp = time.time()
+            with urllib.request.urlopen(req, timeout=self.timeout) as f:
                 for line in f:
                     try:
                         yield line.decode("utf-8-sig") # uft-8-sig to handle BOM characters
@@ -226,14 +231,17 @@ class RobotsParser:
             elif 400 <= err.code < 500:
                 self.allow_all = True
                 self._warnings.append((str(err.code), f"{str(err)} for {uri}"))
-            self._time = 0
+            self.timestamp = 0
         except urllib.error.URLError as err:
-            self._errors.append(("", f"{str(err)} for {uri}"))
+            now = time.time()
+            duration = round(now - self.timestamp)
+            self._errors.append(("", f"{str(err)} for {uri} (duration={duration}s)"))
 
     @classmethod
-    def from_uri(cls: Type[T], uri: str) -> T:
+    def from_uri(cls: Type[T], uri: str, timeout=5) -> T:
         """Build a robots parser given a url or uri pointing to a robots.txt."""
         parser = cls()
+        parser.timeout = timeout
         parser.parse_tokens(gen_tokens(parser.gen_uri, uri))
         return parser
 
@@ -243,6 +251,7 @@ class RobotsParser:
         try:
             with open(filename) as f:
                 for line in f:
+
                     yield line
         except FileNotFoundError:
             self._errors.append((filename, Errors.ERROR_NO_FILE_FOUND))
@@ -402,10 +411,7 @@ class RobotsParser:
         if self.disallow_all:
             return False
 
-        print(f"{url=}")
-
         host, path = RobotsParser.normalize_url(url)
-        print(f"{host=}, {path=}")
 
         if host and self.host and host != self.host:
             return False
