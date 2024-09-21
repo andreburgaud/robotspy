@@ -228,11 +228,15 @@ class RobotsParser:
             if err.code in (401, 403):
                 self.disallow_all = True
                 self._errors.append((str(err.code), f"{str(err)} for {uri}"))
-            elif 400 <= err.code < 500:
+            elif 400 <= err.code < 500: # Unavailable status
                 self.allow_all = True
                 self._warnings.append((str(err.code), f"{str(err)} for {uri}"))
+            elif 500 <= err.code < 600: # Unreachable status
+                self.disallow_all = True
+                self._warnings.append((str(err.code), f"{str(err)} for {uri}"))
             self.timestamp = 0
-        except urllib.error.URLError as err:
+        except urllib.error.URLError as err: # Unreachable status?
+            self.disallow_all = True
             now = time.time()
             duration = round(now - self.timestamp)
             self._errors.append(("", f"{str(err)} for {uri} (duration={duration}s)"))

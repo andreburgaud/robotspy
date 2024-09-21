@@ -18,11 +18,11 @@ def parser():
 
 
 def test_basic_disallow_all(parser):
-    assert parser.disallow_all is False
+    assert not parser.disallow_all
 
 
 def test_basic_allow_all(parser):
-    assert parser.allow_all is False
+    assert not parser.allow_all
 
 
 can_fetch_data = (
@@ -53,3 +53,17 @@ def test_utf16():
     p = robots.RobotsParser.from_uri('https://robotspy.org/tests/robots_utf16.txt')
     assert p.allow_all  # robots file with unexpected encoding (must be UTF-8) => allow access to all paths
     assert p.can_fetch('FooBot', '/admin')
+
+def test_short_timeout():
+    p = robots.RobotsParser.from_uri("https://robotspy.org/robots.txt", 0)
+    assert p.errors
+    assert p.disallow_all
+    assert not p.can_fetch('FooBot', '/admin')
+
+def test_error_timetout():
+    p = robots.RobotsParser.from_uri("https://robotspy.org:555/robots.txt", 1)
+
+    # The duration may be greater than the timeout because the urllib.request.urlopen timeout does not equate to a total timeout
+    assert p.errors
+    assert p.disallow_all
+    assert not p.can_fetch('FooBot', '/admin')
