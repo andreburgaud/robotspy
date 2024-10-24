@@ -1,4 +1,10 @@
 attrs==24.2.0
+backports.tarfile==1.2.0
+importlib-metadata==8.0.0
+importlib-resources==6.4.0
+jaraco.collections==5.1.0
 pip-chill==1.0.3
+platformdirs==4.2.2
 pytest==8.3.3
 toml==0.10.2
+tomli==2.0.1
