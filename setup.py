@@ -7,7 +7,7 @@ README = (CWD / "README.md").read_text()
 
 setup(
     name="robotspy",
-    version="0.11.0",
+    version="0.12.0",
     description="Robots Exclusion Protocol File Parser",
     long_description=README,
     long_description_content_type="text/markdown",
