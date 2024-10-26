@@ -22,6 +22,7 @@ import robots
 RE_AGENT_TOKEN = re.compile(r"^[a-zA-Z_-]+$")
 
 # Pattern to read and identify a product token, user agent.
+# Match up to the first invalid character (for example stops at a number but does not error out)
 # Note: the hash character ('#') needs to be escaped in VERBOSE mode, otherwise it would be
 # interpreted as a comment.
 RE_AGENT = re.compile(
@@ -258,7 +259,7 @@ class RobotsParser:
 
                     yield line
         except FileNotFoundError:
-            self._errors.append((filename, Errors.ERROR_NO_FILE_FOUND))
+            self._errors.append((filename, Errors.ERROR_NO_FILE_FOUND.value))
 
     @classmethod
     def from_file(cls: Type[T], filename: str) -> T:
@@ -286,7 +287,10 @@ class RobotsParser:
         See: https://tools.ietf.org/html/draft-koster-rep-00#section-3.2
         """
         rules.sort(key=lambda x: (len(x.path), x.allowed), reverse=True)
-        for agent in agents:
+
+        # Need to dedup agents `list(set(agents))` caused by intentional lax parsing stopping at the first invalid character.
+        # For example, GoogleBot and GoogleBot* will both result in googlebot
+        for agent in list(set(agents)):
             if existing_rules := self.agents_rules.get(agent, None):
                 rules = (
                     existing_rules + rules
@@ -330,7 +334,7 @@ class RobotsParser:
                 else:
                     if token.type == TokenType.ALLOW:
                         self._warnings.append(
-                            (f"line {token.linenum}", Errors.WARNING_EMPTY_ALLOW_RULE)
+                            (f"line {token.linenum}", Errors.WARNING_EMPTY_ALLOW_RULE.value)
                         )
             elif token.type == TokenType.SITEMAP:
                 self._sitemaps.append(token.value)
@@ -339,7 +343,7 @@ class RobotsParser:
                 self._warnings.append(
                     (
                         f"line {token.linenum}",
-                        f"{Errors.WARNING_UNEXPECTED_OR_IGNORED}: {token.value}",
+                        f"{Errors.WARNING_UNEXPECTED_OR_IGNORED.value}: {token.value}",
                     )
                 )
 
