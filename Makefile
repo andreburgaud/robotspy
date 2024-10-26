@@ -22,7 +22,7 @@ difflib:
 	diff -w <(pip freeze) <(cat requirements.txt)
 
 
-dist: freeze version test clean wheel check
+dist: version test clean wheel check
 
 docker:
 	docker build -t 'andreburgaud/${PROJECT}:${VERSION}' .
@@ -38,9 +38,6 @@ docker-deploy: docker-scout
 # black installed globally
 fmt:
 	black robots
-
-freeze:
-	pip-chill | grep -v robotspy > requirements.txt
 
 help:
 	@echo 'Makefile for RobotsPy (Python robots.txt parser)'
