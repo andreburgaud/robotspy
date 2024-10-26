@@ -1,0 +1,6 @@
+user-agent: ExampleBot
+disallow: /foo
+disallow: /bar
+
+user-agent: ExampleBot
+disallow: /baz

@@ -1,7 +1,5 @@
 import robots
 
-AGENT = "Googlebot"
-
 parser = robots.RobotsParser.from_file("robots_file_large.txt")
 
 if parser.errors:

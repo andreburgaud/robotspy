@@ -1,0 +1,51 @@
+User-agent: Mediapartners-Google
+Disallow:
+
+User-agent: Mediapartners-Google*
+Disallow:
+
+User-agent: *
+Disallow: /abuse
+Disallow: /admgt/
+Disallow: /donate
+Disallow: /go/
+Disallow: /modcp
+Disallow: /post
+Disallow: /privmsg
+Disallow: /spa/
+Disallow: /sta/
+Disallow: /bw
+Disallow: /dx
+Disallow: /topicit/index.php/connect
+Disallow: /calendar_scheduler.forum
+Noindex: /login
+
+User-agent: 008
+User-agent: Accoona
+User-agent: aipbot
+User-agent: aipbot*
+User-agent: aipbot/1.0
+User-agent: Alexa
+User-agent: Alexa Bitlybot
+User-agent: Alexibot
+User-agent: AltaVista Intranet V2.0 AVS EVAL search@freeit.com
+User-agent: AltaVista Intranet V2.0 Compaq Altavista Eval sveand@altavista.net
+User-agent: AltaVista Intranet V2.0 evreka.com crawler@evreka.com
+User-agent: AltaVista V2.0B crawler@evreka.com
+Disallow: /bad
+
+User-agent: GoogleBot
+User-agent: MicrosoftBot
+User-agent: FacebookBot
+Disallow: /tmp/
+Disallow: /secrets/
+
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: Sogou web spider
+User-agent: sogou spider
+User-agent: MJ12bot
+User-agent: MJ12bot/v1.4.3
+Crawl-delay: 2
+
+
