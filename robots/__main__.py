@@ -20,6 +20,8 @@ import robots
 def init_cli() -> argparse.ArgumentParser:
     """Initialize the argument parser to handle the command line interface."""
 
+    prog_name = __package__ if __package__ else ""
+
     cli: argparse.ArgumentParser = argparse.ArgumentParser(
         usage="%(prog)s <robotstxt> <useragent> <path>",
         description=(
@@ -27,7 +29,7 @@ def init_cli() -> argparse.ArgumentParser:
             "is allowed or disallowed by a given robots.txt file."
         ),
     )
-    cli.prog = __package__
+    cli.prog = prog_name
     cli.add_argument(
         "-v", "--version", action="version", version=f"{cli.prog} {robots.__version__}"
     )
